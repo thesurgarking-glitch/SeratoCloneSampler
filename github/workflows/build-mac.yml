@@ -31,12 +31,4 @@ jobs:
       - name: Package Plugins
         run: |
           mkdir -p Release
-          cp -R Builds/Mac/Release/SeratoCloneSampler.vst3 Release/
-          cp -R Builds/Mac/Release/SeratoCloneSampler.clap Release/
-
-      - name: Upload Release Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SeratoCloneSampler-Plugins
-          path: Release/
-`
+          cp -R Buil
