@@ -1,0 +1,41 @@
+name: Build macOS Plugins
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install CMake
+        run: brew install cmake
+
+      - name: Setup JUCE Submodule
+        run: git submodule update --init --recursive
+
+      - name: Create build folder
+        run: mkdir -p Builds/Mac && cd Builds/Mac
+
+      - name: Configure CMake
+        run: cmake ../../
+
+      - name: Build plugin
+        run: cmake --build . --config Release
+
+      - name: Package Plugins
+        run: |
+          mkdir -p Release
+          cp -R Builds/Mac/Release/SeratoCloneSampler.vst3 Release/
+          cp -R Builds/Mac/Release/SeratoCloneSampler.clap Release/
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SeratoCloneSampler-Plugins
+          path: Release/
