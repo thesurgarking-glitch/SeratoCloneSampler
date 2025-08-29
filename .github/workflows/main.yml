@@ -13,9 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install CMake
-        run: brew install cmake
-
       - name: Setup JUCE Submodule
         run: git submodule update --init --recursive
 
